@@ -64,37 +64,40 @@ public:
 请求文件的第 500 个字节到最后一个字节：Range: bytes=500-
 */
     void addRange(Buffer &buff) {
-        char s[64] = "Content-Range: bytes ";
+        char s[64] = "Content-Range: bytes "; // len 21
+        int n = 21;
         if (_range_start != -1 && _range_end != -1) {
 
             _range_send_begin = _mmFile + _range_start;
             _range_send_size = _range_end - _range_start + 1;
 
             _range_send_size = RANGE_SIZE > _range_send_size ? _range_send_size : RANGE_SIZE;
-            sprintf(s + 21, "%d-%d/%ld\r\n", _range_start, _range_end, _mmFileStat.st_size);
-        } else if (_range_start != -1) {
+            sprintf(s + n, "%d-%d/%ld\r\n", _range_start, _range_end, _mmFileStat.st_size);
+        }
+        else if (_range_start != -1) {
 
             _range_send_begin = _mmFile + _range_start;
             _range_send_size = _mmFileStat.st_size - _range_start;
 
             _range_send_size = RANGE_SIZE > _range_send_size ? _range_send_size : RANGE_SIZE;
             // sprintf(s + 21, "%d-%ld/%ld\r\n", _range_start, _mmFileStat.st_size - 1, _mmFileStat.st_size);
-            sprintf(s + 21, "%d-%d/%ld\r\n", _range_start, _range_send_size + _range_start - 1, _mmFileStat.st_size);
-        } else if (_range_end != -1) {
+            sprintf(s + n, "%d-%d/%ld\r\n", _range_start, _range_send_size + _range_start - 1, _mmFileStat.st_size);
+        }
+        else if (_range_end != -1) {
 
             _range_send_begin = _mmFile + (_mmFileStat.st_size - _range_end);
             _range_send_size = _range_end;
 
             _range_send_size = RANGE_SIZE > _range_send_size ? _range_send_size : RANGE_SIZE;
             // sprintf(s + 21, "%ld-%ld/%ld\r\n", _mmFileStat.st_size - _range_end, _mmFileStat.st_size - 1, _mmFileStat.st_size);
-            sprintf(s + 21, "%ld-%ld/%ld\r\n", _mmFileStat.st_size - _range_send_size, _mmFileStat.st_size - 1, _mmFileStat.st_size);
+            sprintf(s + n, "%ld-%ld/%ld\r\n", _mmFileStat.st_size - _range_send_size, _mmFileStat.st_size - 1, _mmFileStat.st_size);
         }
         buff.append(s, strlen(s));
     }
     void addCRLF(Buffer &buff) { buff.append("\r\n"); }
 
     void addContentLength(Buffer &buff, int size) {
-        char s[32] = "Content-length: ";
+        char s[32] = "Content-length: "; // len 16
         sprintf(s + 16, "%d\r\n", size);
         buff.append(s, strlen(s));
     }

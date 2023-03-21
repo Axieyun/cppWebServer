@@ -128,10 +128,10 @@ int main() {
 
     // axy::HttpConn::set_user_count(3);
     // std::cout << axy::HttpConn::get_user_count() << std::endl;
-	// if(-1 == daemon(1, 0)) {
-	//   	printf("daemon error\n");
- 	//     exit(1);
-    // }
+	if(-1 == daemon(1, 0)) {
+	  	printf("daemon error\n");
+ 	    exit(1);
+    }
 
     uint32_t time_out = 120000;
     // std::time_t c1 = Clock::to_time_t(Clock::now() + MS(time_out));

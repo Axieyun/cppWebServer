@@ -71,12 +71,15 @@ void axy::HttpResponse::init(const char *srcDir, axy::HttpRequest &request, int 
         unmapFile();
     }
 
-    _code = code;
+
     _is_gzip = request.is_gzip(); //获取客户是否支持gzip压缩
-    _range_start = request.getRangeStart();
-    _range_end = request.getRangeEnd();
-    if (is_range()) _code = 206;
-    // printf(RED "Range: bytes=%d-%d" NONE "\n", _range_start, _range_end);
+
+    {
+        _range_start = request.getRangeStart();
+        _range_end = request.getRangeEnd();
+        _code = is_range() ? 206 : code;
+    }
+
     _isKeepAlive = request.isKeepAlive();
     _is_piecemeal = false;
     // printf(GREEN "client %s" NONE "\n", _is_gzip ? "支持压缩" : "不支持压缩");
@@ -173,7 +176,7 @@ void axy::HttpResponse::_addHeader(Buffer& buff) {
     _addStateLine(buff);
     _addServer(buff);
     _addAcceptRanges(buff); //支持范围请求
-    _addDate(buff);
+    // _addDate(buff);
     _addAccessControlAllowOrigin(buff); //允许跨域请求
     buff.append("Connection: ");
     if(_isKeepAlive) {

@@ -92,7 +92,7 @@ bool axy::Epoller::add_fd(int fd, uint32_t events, uint32_t user_size, const boo
     ev.data.fd = fd;
     ev.events = events;
     if (is_nonblocking) make_nonblocking(fd);
-    _set_tcp_nodelay(fd);
+    _set_tcp_nodelay(fd); //关闭Nagle算法
 
 
     return (0 == epoll_ctl(_epoll_fd, EPOLL_CTL_ADD, fd, &ev));

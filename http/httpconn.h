@@ -33,7 +33,7 @@
 
 
 // 数据大小大于 PIECE_ZIP_COND_SIZE就进行f分块压缩传输
-const static int PIECE_ZIP_COND_SIZE = ((1 << 12) * 80); //块大小
+const static int PIECE_ZIP_COND_SIZE = ((1 << 12) * 60); //块大小
 
 
 /*

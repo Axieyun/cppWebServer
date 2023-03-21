@@ -95,9 +95,9 @@ void axy::HttpRequest::_parsePath() {
     if (_path == "/") {
         _path = "/login.html";
     }
-    else if (_path == "/blog") {
-        _path = "/blog_list.html";
-    }
+    // else if (_path == "/blog") {
+    //     _path = "/blog_list.html";
+    // }
     else {
         for(auto &item: _DEFAULT_HTML) {
             if(item == _path) {
@@ -131,6 +131,8 @@ void axy::HttpRequest::_parseHeader(const std::string& line) {
     std::smatch subMatch;
     if (std::regex_match(line, subMatch, patten)) {
         _header[subMatch[1]] = subMatch[2];
+    }
+    else {
 /*
 请求文件的第一个字节：Range: bytes=0-0
 请求文件的前 100 个字节：Range: bytes=0-99
@@ -146,9 +148,6 @@ void axy::HttpRequest::_parseHeader(const std::string& line) {
             if (idx2 + 1 < it->second.size()) _range_end = atoi(it->second.substr(idx2 + 1).c_str());
             // printf(RED "Range: bytes=%d-%d" NONE "\n", _range_start, _range_end);
         }
-
-    }
-    else {
         _state = BODY;
     }
 }
@@ -173,12 +172,7 @@ void axy::HttpRequest::_parsePost() {
         auto it = _DEFAULT_HTML_TAG.find(_path);
         if (it != _DEFAULT_HTML_TAG.end()) {
             int tag = it->second; //1:login, 0:注册
-#ifdef DEBUG
-            LOG1("Tag:%d\n", tag);
-#endif // DEBUG
-
             _path += (UserVerify(_post["username"], _post["password"], (tag == 1))) ? "_ok.json" : "_fail.json";
-                // char *json = "\"code\":1,\"message:\"登录成功!";
         }
     }
 
@@ -241,10 +235,8 @@ std::string& axy::HttpRequest::path() { return _path; }
 
 bool axy::HttpRequest::_is_header_key_exist_val(const char *key, const char *val) {
     auto it = _header.find(key);
-    // printf(GREEN "%s: %s" NONE "\n", key, val);
     if (it != _header.end()) {
-        std::string val = it->second;
-        return (val.find(val) != std::string::npos);
+        return (it->second.find(val) != std::string::npos);
     }
     return false;
 }
