@@ -22,8 +22,8 @@ class WebServer {
 public:
 
     WebServer(const uint16_t port, uint32_t time_ms
-    , short sql_port, const char *sql_user, const char *sql_pwd
-    , const char *db_name, const char *static_src = "/home/axieyun_aly_kkb/resources/blogSystem");
+    , short sql_port, const char *sql_user, const char *sql_pwd, const char *db_name
+    , const char *static_src = "/home/axieyun_aly_kkb/resources/blogSystem");
     ~WebServer();
     void start();
 

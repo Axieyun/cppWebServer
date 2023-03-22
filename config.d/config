@@ -1,0 +1,9 @@
+SERVER_PORT=8000
+TIME_OUT_MS=60000
+SRC_DIR=/home/axieyun_aly_kkb/resources/blogSystem
+# DAEMON=0
+DAEMON=1
+MYSQL_PWD=xxxxx
+MYSQL_USER=root
+M_MYSQL_PORT=3306
+MYSQL_DB=test

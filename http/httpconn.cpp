@@ -243,7 +243,10 @@ int axy::HttpConn::write(int *save_errno) {
 
 
     if (_response->is_range()) {
+#ifdef DEBUG
         printf(GREEN "范围传输" NONE "\n");
+#endif // DEBUG
+
         return _send_range(save_errno);
     }
 

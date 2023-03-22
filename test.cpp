@@ -69,7 +69,10 @@ void get(std::string &ret, std::string&& s) {
     ret = std::move(std::forward<std::string>(s));
 }
 
-int main() {
+int main(int argc, char *argv[]) {
+    if (argc > 1) {
+        printf("%s\n", argv[1]);
+    }
 
     // axy::ThreadPool::ptr thread_pool = std::make_shared<axy::ThreadPool>(10);
     // // axy::ThreadPool thread_pool;

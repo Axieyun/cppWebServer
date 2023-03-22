@@ -33,7 +33,7 @@ namespace axy {
 
 // const static int RANGE_SIZE = 16 * (1 << 10);
 // const static int RANGE_SIZE = 18644;
-const static int RANGE_SIZE = 8 * K4;
+const static int RANGE_SIZE = 12 * K4;
 
 
 class HttpResponse {
@@ -126,7 +126,6 @@ public:
 
     std::string _path;
     std::string _srcDir;
-    std::string _file_suffix; //文件后缀
 
 private:
     int _range_start = -1;

@@ -51,7 +51,6 @@ const std::unordered_map<int, std::string> axy::HttpResponse::_CODE_PATH = {
 axy::HttpResponse::HttpResponse() {
     _code = -1;
     _path = _srcDir = "";
-    _file_suffix = "";
     _isKeepAlive = false;
     _is_up_https = false;
     _mmFile = nullptr;
@@ -181,7 +180,7 @@ void axy::HttpResponse::_addHeader(Buffer& buff) {
     buff.append("Connection: ");
     if(_isKeepAlive) {
         buff.append("keep-alive\r\n");
-        buff.append("keep-alive: max=6, timeout=120\r\n");
+        buff.append("keep-alive: max=4, timeout=60\r\n");
         //# timeout：估计了服务器希望将连接保持在活跃状态的（空闲）时间。不是一个承诺值
         //# max：估计了服务器还希望为多少个事务保持此连接的活跃状态。不是一个承诺值
     } else{

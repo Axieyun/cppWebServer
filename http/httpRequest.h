@@ -102,15 +102,21 @@ public:
 
 
     bool isKeepAlive() const {
-        if (_header.find("Connection") != _header.end()) {
-            return (_header.find("Connection")->second == "keep-alive") && (_version == "1.1");
+        auto it = _header.find("Connection");
+        if (it != _header.end()) {
+            return (it->second == "keep-alive") && (_version == "1.1");
         }
+        // it = _header.find("Proxy-Connection");
+        // if (it != _header.end()) {
+        //     return it->second == "keep-alive";
+        // }
         return false;
     }
     bool isUpGradeInsecureRequests() const {
-        if (_header.find("Upgrade-Insecure-Requests") != _header.end()) {
-            return false;
-            // return (_header.find("Connection")->second == '1') && (_version == "1.1");
+        return false;
+        auto it = _header.find("Upgrade-Insecure-Requests");
+        if (it != _header.end()) {
+            return (it->second == "1") && (_version == "1.1");
         }
         return false;
     }

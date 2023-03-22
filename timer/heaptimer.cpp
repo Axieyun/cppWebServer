@@ -2,11 +2,16 @@
  * @Author       : mark
  * @Date         : 2020-06-17
  * @copyleft Apache 2.0
- */ 
+ */
 #include "heaptimer.h"
 
 void axy::HeapTimer::siftup_(int child) { //节点上升
+#ifdef DEBUG
     assert(child >= 0 && child < (int)heap_.size());
+#else
+    if ( child < 0 || child >= (int)heap_.size()) return ;
+#endif // DEBUG
+
     // size_t j = (child - 1) / 2;   //child == 0时，j = 9223372036854775807
     int father = (child - 1) >> 1;
     TimerNode temp = heap_[child];
@@ -20,14 +25,20 @@ void axy::HeapTimer::siftup_(int child) { //节点上升
     heap_[child] = temp;
 }
 
-void axy::HeapTimer::_swapNode(int i, int j) { 
-    // std::cout << i << " " << j << " " << heap_.size() << " \n";
+void axy::HeapTimer::_swapNode(int i, int j) {
+#ifdef DEBUG
     assert(i >= 0 && i < heap_.size());
     assert(j >= 0 && j < heap_.size());
+#else
+    if (i < 0 || i >= heap_.size()) return ;
+    if (j < 0 || j >= heap_.size()) return ;
+#endif // DEBUG
+
+
     std::swap(heap_[i], heap_[j]);
     ref_[heap_[i].id] = i;
     ref_[heap_[j].id] = j;
-} 
+}
 
 bool axy::HeapTimer::siftdown_(int index, int heap_size) {//节点下降
     if (!(index >= 0 && index < heap_.size())) return false;
@@ -52,7 +63,7 @@ bool axy::HeapTimer::siftdown_(int index, int heap_size) {//节点下降
 void axy::HeapTimer::doWork(int id, bool is_call) {
     /* 删除指定id结点，并触发回调函数 */
     if (id < 0) return ;
-    
+
     if (heap_.empty() || ref_.count(id) == 0) {
         return ;
     }
@@ -65,11 +76,22 @@ void axy::HeapTimer::doWork(int id, bool is_call) {
 
 void axy::HeapTimer::del_(size_t index) {
     /* 删除指定位置的结点 */
+#ifdef DEBUG
     assert(!heap_.empty() && index >= 0 && index < heap_.size());
+#else
+    if (heap_.empty() || index < 0 || index >= heap_.size()) return ;
+#endif // DEBUG
+
     /* 将要删除的结点换到队尾，然后调整堆 */
     size_t i = index;
     size_t n = heap_.size() - 1;
+
+#ifdef DEBUG
     assert(i <= n);
+#else
+    if (i > n) return ;
+#endif // DEBUG
+
     if (i < n) {
         _swapNode(i, n);
         if(!siftdown_(i, n)) {
@@ -133,6 +155,6 @@ int axy::HeapTimer::getNextTick() {
         res = std::chrono::duration_cast<MS>(heap_.front().expires - Clock::now()).count();
         if (res < 0) res = 0;
     }
-    
+
     return res;
 }
