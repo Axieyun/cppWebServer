@@ -33,7 +33,7 @@ namespace axy {
 
 // const static int RANGE_SIZE = 16 * (1 << 10);
 // const static int RANGE_SIZE = 18644;
-const static int RANGE_SIZE = 12 * K4;
+const static int RANGE_SIZE = 16 * K4;
 
 
 class HttpResponse {

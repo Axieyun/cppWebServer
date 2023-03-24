@@ -53,7 +53,7 @@ void initConf(struct conf &cnf) {
             cnf.SERVER_PORT = atoi(val.c_str());
         } else if (key == "TIME_OUT_MS") {
             cnf.TIME_OUT_MS = atoi(val.c_str());
-        } else if (key == "MYSQL_PORT") {
+        } else if (key == "M_MYSQL_PORT") {
             cnf.M_MYSQL_PORT = atoi(val.c_str());
         } else if (key == "DAEMON") {
             cnf.DAEMON = atoi(val.c_str());
