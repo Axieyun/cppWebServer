@@ -55,7 +55,7 @@ void axy::HeapTimer::siftup_(int child) { //节点上升
 ## 学到
 
 ### zlib的使用
-
+* [zlib学习小结](https://blog.csdn.net/cp3alai/article/details/51282338)
 * flush：如果文件过大时，数据不能一次读取进缓冲区进行压缩，那么flush就为Z_NO_FLUSH，告诉gzip这不是最后一次压缩。如果是最后一次压缩，那么flush为Z_FINISH
 * 注意：
 * * Z_FINISH对应的正常的返回值为：Z_STREAM_END
